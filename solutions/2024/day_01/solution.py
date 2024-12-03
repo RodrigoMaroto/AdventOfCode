@@ -31,7 +31,7 @@ class Solution(StrSplitSolution):
             right_list.append(int(right))
         right_count = Counter(right_list)
         return sum([right_count[num] * num for num in left_list])
-    
+
     @answer((1388114, 23529853))
     def solve(self):
         left_list, right_list = [], []
@@ -44,8 +44,9 @@ class Solution(StrSplitSolution):
         right_list.sort()
         right_count = Counter(right_list)
 
-        total_distance = sum([abs(left_list[i] - right_list[i]) for i in range(len(left_list))])
+        total_distance = sum(
+            [abs(left_list[i] - right_list[i]) for i in range(len(left_list))]
+        )
         similarity_score = sum([right_count[num] * num for num in left_list])
-        
+
         return total_distance, similarity_score
-            
