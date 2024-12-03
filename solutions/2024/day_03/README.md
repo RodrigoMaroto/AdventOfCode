@@ -8,7 +8,7 @@ Day 3 looked at first like I would need to do a parser/compiler, but the problem
 In this first part, we are given a long text, very unstructured that looks like some type of broken code. For this first part we only need to focus on the `mul(X,Y)` instructions, where X and Y are integers and the syntax has to be very exact, not allowing even spaces.  
 
 The best way to deal with this is a **Regular Expression (RegEx)** to find all instances that fit this pattern.  
-In the pattern used, we can note both the use of `\d{1,3}` because the problem stated that integers should have between 1-3 digits, but if this wasn't a restriction it would be better to use `\d+` (in the input I recieved both would work correctly).   
+In the pattern used, we can note the use of `\d{1,3}` because the problem stated that integers should have between 1-3 digits, but if this wasn't a restriction it would be better to use `\d+` (in the input I recieved both would work correctly).   
 Also by putting the digits between parenthesis, the `re.findall()` function will just return them ignoring the `mul()` which will only be used to find the expressions. This will return a list of tuples containing two strings that are the integers that will be multiplied.  
 
 ```
