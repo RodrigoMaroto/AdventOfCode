@@ -5,9 +5,9 @@
 Today we have a traditional word search puzzle and a slightly different version for Part 2.
 
 ## Part 1
-In this first part, we have to search the word `XMAS` in a matrix that can be appear horizontal, vertical, diagonal, written backwards, or even overlapping other words.
+In this first part, we have to search for the word `XMAS` in a matrix that can appear horizontally, vertically, diagonally, written backwards, or even overlapping other words.
 
-First of all to handle the input, I transformed it into a matrix of characters. Additionally, when I need to do checks regarding adjacent elements in a matrix I like to add a sort of outer layer (in this case I will use `"."`), to be able to forget about boundary checks.
+First, to handle the input, I transformed it into a matrix of characters. Additionally, when I need to do checks regarding adjacent elements in a matrix, I like to add a sort of outer layer (in this case, I will use `"."`) to forget about boundary checks.
 ```py
 class Solution(StrSplitSolution):
     def part_1(self) -> int:
@@ -15,11 +15,11 @@ class Solution(StrSplitSolution):
         matrix.insert(0, ["."] * len(matrix[0]))
         matrix.append(["."] * len(matrix[0]))
 ```
-Once we have this, I simply applied my favorite way of traditionally solbing this problems by hand, which is to look for all instances of the first character and try to follow all directions looking for the correct pattern.  
+Once we have this, I simply applied my favorite way of traditionally solving these problems by hand, which is to look for all instances of the first character and try to follow all directions looking for the correct pattern.
 
-For this, I created a function, that given the matrix and a position in it, it will return the number of correct patterns found originating from there, and `0` if the that element is different from `X`.  
+For this, I created a function that, given the matrix and a position in it, will return the number of correct patterns found originating from there, and `0` if that element is different from `X`.
 
-By solving it this way, we ensure that we capture all occurences as words can overlap while taking care of duplicate counting as we are looking just for the origin of the word.
+By solving it this way, we ensure that we capture all occurrences as words can overlap while taking care of duplicate counting as we are looking just for the origin of the word.
 
 ```py
 def check_xmas(matrix: list[list[str]], x: int, y: int) -> int:
@@ -48,14 +48,14 @@ class Solution(StrSplitSolution):
 
 ## Part 2
 
-For Part 2, the pattern we need to find in this matrix is slightly different. It is defined as `X-MAS`, two `MAS` in the shape of an X. There are therefore, 4 posibilities:
+For Part 2, the pattern we need to find in this matrix is slightly different. It is defined as `X-MAS`, two `MAS` in the shape of an X. There are, therefore, 4 possibilities:
 ```
 M.S     M.M     M.M     S.S   
 .A.     .A.     .A.     .A.   
 M.S     S.S     S.S     M.M   
 ```
 
-Following a similar approach as the previoius part, in this case we identify `A` as the *origin* of the "word" and for each of these elements we check if it is a valid combination. In this case, one of this can only be part of a single word and therefore our function now returns a boolean.  
+Following a similar approach as the previous part, in this case, we identify `A` as the *origin* of the "word" and for each of these elements, we check if it is a valid combination. In this case, one of these can only be part of a single word and therefore our function now returns a boolean.  
 We perform this check by assuring that in each diagonal there is both an `M` and an `S`, using a `set` to compare as we don't take the order into account.
 
 ```py
