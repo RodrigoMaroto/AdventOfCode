@@ -76,7 +76,7 @@ class Solution(TextSolution):
         return find_a(instructions, 0, 0)
 
     @answer(("4,3,7,1,5,3,0,5,4", 190384615275535))
-    def solve(self) -> tuple[int, int]:
+    def solve(self) -> tuple[str, int]:
         a, b, c, *instructions = [int(x) for x in re.findall(r"\d+", self.input)]
         out_buffer = execute_program(instructions, a, b, c)
         return ",".join([str(x) for x in out_buffer]), find_a(instructions)
