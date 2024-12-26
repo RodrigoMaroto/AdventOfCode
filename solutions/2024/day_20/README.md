@@ -10,7 +10,7 @@ The solution uses Dijkstra's algorithm to calculate the shortest distance from t
 - A priority queue processes each point, ensuring nodes are visited in increasing order of distance.
 - The distances to all points are stored in a dictionary.
 ```py
-def dijkstra(grid, start, end):
+def dijkstra(grid, start):
     distances = defaultdict(lambda:(float("inf")))
     dirs = [(1,0),(0,1),(-1,0),(0,-1)]
     distances[start] = 0
@@ -35,12 +35,11 @@ class Solution(StrSplitSolution):
     def part_1(self) -> int:
         grid = parse_grid(self.input)
         start = list(grid.keys())[list(grid.values()).index("S")]
-        end = list(grid.keys())[list(grid.values()).index("E")]
-        distances = dijkstra(grid, start, end)
+        distances = dijkstra(grid, start)
         result = 0
         for (p,i), (q,j) in combinations(distances.items(), 2):
             d = manhattan(p, q)
-            if d == 2 and j-i-d >= 100: result1 += 1
+            if d == 2 and j-i-d >= 100: result += 1
         return result
 ```
 
@@ -51,8 +50,7 @@ class Solution(StrSplitSolution):
     def solve(self) -> tuple[int, int]:
         grid = parse_grid(self.input)
         start = list(grid.keys())[list(grid.values()).index("S")]
-        end = list(grid.keys())[list(grid.values()).index("E")]
-        distances = dijkstra(grid, start, end)
+        distances = dijkstra(grid, start)
         result1, result2 = 0, 0
         for (p,i), (q,j) in combinations(distances.items(), 2):
             d = manhattan(p, q)
