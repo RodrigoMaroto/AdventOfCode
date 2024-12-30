@@ -6,7 +6,6 @@ from functools import cache
 
 from ...base import StrSplitSolution, answer
 
-
 num_pad = {
     "7": (0, 0),
     "8": (0, 1),
