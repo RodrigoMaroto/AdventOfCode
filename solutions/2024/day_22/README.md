@@ -2,7 +2,6 @@
 
 `Monkey Market` ([prompt](https://adventofcode.com/2024/day/22))
 
-Use this space for notes on the day's solution and to document what you've learned!
 
 ## Part 1
 Today's puzzle involves manipulating a series of numbers using a pseudo-random transformation function. The goal is to process each input number through 2000 iterations of the secret_num function and sum the resulting values.
