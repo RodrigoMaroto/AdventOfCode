@@ -19,26 +19,6 @@ class Solution(StrSplitSolution):
     _year = 2024
     _day = 23
 
-    """
-    @answer(1077)
-    @slow
-    def part_1(self) -> int:
-        g = networkx.Graph()
-        g.add_edges_from(line.rstrip().split("-") for line in self.input)
-        return sum(
-            any(str(node).startswith("t") for node in cycle)
-            for cycle in networkx.simple_cycles(g, length_bound=3)
-        )
-
-    @answer("bc,bf,do,dw,dx,ll,ol,qd,sc,ua,xc,yu,zt")
-    @slow
-    def part_2(self) -> str:
-        g = networkx.Graph()
-        g.add_edges_from(line.rstrip().split("-") for line in self.input)
-        largest_subnet = networkx.approximation.max_clique(g)
-        return ",".join(sorted(largest_subnet))
-    """
-
     @answer(1077)
     def part_1(self) -> int:
         edges = [line.strip().split("-") for line in self.input]
