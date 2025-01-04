@@ -3,27 +3,9 @@
 # puzzle prompt: https://adventofcode.com/2024/day/12
 
 from ...base import StrSplitSolution, answer
+from ...utils.grid import Grid, GridPoint, add_points, parse_grid
 
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
 visited = set()
-
-
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = c
-
-    return result
-
-
-def add_points(x: GridPoint, y: GridPoint) -> GridPoint:
-    return (x[0] + y[0], x[1] + y[1])
 
 
 def plotRegion(

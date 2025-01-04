@@ -6,38 +6,7 @@ import heapq
 from collections import defaultdict
 
 from ...base import StrSplitSolution, answer
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
-
-
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = c
-
-    return result
-
-
-def print_grid(grid: Grid):
-    """
-    Prints the grid in a pretty format
-    """
-    max_x = max(x for x, _ in grid)
-    max_y = max(y for _, y in grid)
-    for x in range(max_x + 1):
-        for y in range(max_y + 1):
-            print(grid.get((x, y), " "), end="")
-        print()
-
-
-def add_points(x: GridPoint, y: GridPoint) -> GridPoint:
-    return (x[0] + y[0], x[1] + y[1])
+from ...utils.grid import Grid, GridPoint, add_points, parse_grid
 
 
 def seg(x: GridPoint, y: GridPoint) -> tuple[int, ...]:

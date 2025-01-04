@@ -3,25 +3,10 @@
 # puzzle prompt: https://adventofcode.com/2024/day/10
 
 from ...base import StrSplitSolution, answer
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, int]
+from ...utils.grid import GridPoint, IntGrid, parse_grid
 
 
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = int(c)
-
-    return result
-
-
-def get_neighbours(grid: Grid, location: GridPoint) -> tuple[GridPoint]:
+def get_neighbours(grid: IntGrid, location: GridPoint) -> tuple[GridPoint]:
     directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
     return tuple(
         loc
@@ -30,7 +15,7 @@ def get_neighbours(grid: Grid, location: GridPoint) -> tuple[GridPoint]:
     )
 
 
-def search(grid: Grid, location: GridPoint, prev_height: int) -> list[GridPoint]:
+def search(grid: IntGrid, location: GridPoint, prev_height: int) -> list[GridPoint]:
     height = grid[location]
     if height != prev_height + 1:
         return []
@@ -48,7 +33,7 @@ class Solution(StrSplitSolution):
 
     @answer((744, 1651))
     def solve(self) -> tuple[int, int]:
-        grid = parse_grid(self.input)
+        grid = parse_grid(self.input, int_vals=True)
         trailheads = [loc for loc in grid if grid[loc] == 0]
         reached_tops = [search(grid, start, -1) for start in trailheads]
         part1 = sum(len(set(x)) for x in reached_tops)

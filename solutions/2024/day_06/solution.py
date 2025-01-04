@@ -3,22 +3,7 @@
 # puzzle prompt: https://adventofcode.com/2024/day/6
 
 from ...base import StrSplitSolution, answer, slow
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
-
-
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = c
-
-    return result
+from ...utils.grid import Grid, parse_grid
 
 
 def update_direction(direction: tuple[int, int]) -> tuple[int, int]:

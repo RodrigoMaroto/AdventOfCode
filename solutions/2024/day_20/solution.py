@@ -7,42 +7,7 @@ from collections import defaultdict
 from itertools import combinations
 
 from ...base import StrSplitSolution, answer, slow
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
-
-
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = c
-
-    return result
-
-
-def print_grid(grid: Grid):
-    """
-    Prints the grid in a pretty format
-    """
-    max_x = max(x for x, _ in grid)
-    max_y = max(y for _, y in grid)
-    for x in range(max_x + 1):
-        for y in range(max_y + 1):
-            print(grid.get((x, y), " "), end="")
-        print()
-
-
-def add_points(x: GridPoint, y: GridPoint) -> GridPoint:
-    return (x[0] + y[0], x[1] + y[1])
-
-
-def manhattan(x: GridPoint, y: GridPoint) -> int:
-    return abs(x[0] - y[0]) + abs(x[1] - y[1])
+from ...utils.grid import Grid, GridPoint, add_points, manhattan_distance, parse_grid
 
 
 def dijkstra(grid: Grid, start: GridPoint) -> dict:
@@ -73,7 +38,7 @@ class Solution(StrSplitSolution):
         distances = dijkstra(grid, start)
         result = 0
         for (p, i), (q, j) in combinations(distances.items(), 2):
-            d = manhattan(p, q)
+            d = manhattan_distance(p, q)
             if d == 2 and j - i - d >= 100:
                 result += 1
         return result
@@ -86,7 +51,7 @@ class Solution(StrSplitSolution):
         distances = dijkstra(grid, start)
         result1, result2 = 0, 0
         for (p, i), (q, j) in combinations(distances.items(), 2):
-            d = manhattan(p, q)
+            d = manhattan_distance(p, q)
             if d == 2 and j - i - d >= 100:
                 result1 += 1
             if d < 21 and j - i - d >= 100:

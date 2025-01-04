@@ -3,38 +3,17 @@
 # puzzle prompt: https://adventofcode.com/2024/day/18
 
 from ...base import StrSplitSolution, answer
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
+from ...utils.grid import Grid, GridPoint, add_points
 
 
-def parse_grid() -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
+def parse_grid(size: int) -> Grid:
     result = {}
 
-    for row in range(71):
-        for col in range(71):
+    for row in range(size):
+        for col in range(size):
             result[row, col] = "."
 
     return result
-
-
-def print_grid(grid: Grid):
-    """
-    Prints the grid in a pretty format
-    """
-    max_x = max(x for x, _ in grid)
-    max_y = max(y for _, y in grid)
-    for x in range(max_x + 1):
-        for y in range(max_y + 1):
-            print(grid.get((x, y), " "), end="")
-        print()
-
-
-def add_points(x: GridPoint, y: GridPoint) -> GridPoint:
-    return (x[0] + y[0], x[1] + y[1])
 
 
 def dijkstra(grid: Grid, start: GridPoint, end: GridPoint) -> int:
@@ -56,12 +35,12 @@ def dijkstra(grid: Grid, start: GridPoint, end: GridPoint) -> int:
     return -1
 
 
-def run(iterations: int, obstacles: list[str]) -> int:
-    grid = parse_grid()
+def run(iterations: int, obstacles: list[str], size: int) -> int:
+    grid = parse_grid(size)
     for i in range(iterations):
-        point = GridPoint(map(int, obstacles[i].split(",")))
-        grid[point] = "#"
-    return dijkstra(grid, (0, 0), (70, 70))
+        point = tuple(map(int, obstacles[i].split(",")))
+        grid[(point[0], point[1])] = "#"
+    return dijkstra(grid, (0, 0), (size - 1, size - 1))
 
 
 class Solution(StrSplitSolution):
@@ -70,15 +49,18 @@ class Solution(StrSplitSolution):
 
     @answer(330)
     def part_1(self) -> int:
-        return run(1024, self.input)
+        if self.use_test_data:
+            return run(12, self.input, 7)
+        return run(1024, self.input, 71)
 
     @answer("10,38")
     def part_2(self) -> str:
+        size = 7 if self.use_test_data else 71
         low = 0
         high = len(self.input)
         while high - low > 1:
             avg = (low + high) // 2
-            if run(avg, self.input) == -1:
+            if run(avg, self.input, size) == -1:
                 high = avg
             else:
                 low = avg

@@ -3,9 +3,7 @@
 # puzzle prompt: https://adventofcode.com/2024/day/8
 
 from ...base import StrSplitSolution, answer
-
-GridPoint = tuple[int, int]
-Grid = dict[GridPoint, str]
+from ...utils.grid import Grid, GridPoint, parse_grid
 
 
 def find_antinodes(
@@ -38,19 +36,6 @@ def find_antinodes(
                     antinodes.add(new_node)
                     k += 1
     return antinodes
-
-
-def parse_grid(raw_grid: list[str]) -> Grid:
-    """
-    returns 2-tuples of (row, col) with their value
-    """
-    result = {}
-
-    for row, line in enumerate(raw_grid):
-        for col, c in enumerate(line):
-            result[row, col] = c
-
-    return result
 
 
 class Solution(StrSplitSolution):
