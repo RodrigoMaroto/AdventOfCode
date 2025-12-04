@@ -62,6 +62,51 @@ def add_points(a: GridPoint, b: GridPoint) -> GridPoint:
 def manhattan_distance(x: GridPoint, y: GridPoint) -> int:
     return abs(x[0] - y[0]) + abs(x[1] - y[1])
 
+def adjacent_points(
+    point: GridPoint, grid: Grid | None = None, *, diagonals: bool = True
+) -> list[GridPoint]:
+    """
+    Return adjacent points to `point`.
+
+    By default (`diagonals=True`) returns the 8 surrounding points. When
+    `diagonals=False` returns only the 4 orthogonal neighbors (up/down/left/right).
+
+    If `grid` is provided, only points that exist as keys in `grid` are
+    returned. Negative coordinates are filtered out early as a fast path for
+    top/left borders (many AoC grids start at (0,0)).
+
+    Examples:
+        adjacent_points((0, 0))  # returns up to 8 neighbor coordinates (non-negative)
+        adjacent_points((0, 0), diagonals=False)  # returns up to 4 orthogonal neighbors
+        adjacent_points((0, 0), grid=my_grid)  # returns only neighbors present in my_grid
+    """
+    x, y = point
+
+    if diagonals:
+        neighbors = [
+            (x - 1, y - 1),
+            (x - 1, y),
+            (x - 1, y + 1),
+            (x, y - 1),
+            (x, y + 1),
+            (x + 1, y - 1),
+            (x + 1, y),
+            (x + 1, y + 1),
+        ]
+    else:
+        neighbors = [
+            (x - 1, y),
+            (x, y - 1),
+            (x, y + 1),
+            (x + 1, y),
+        ]
+
+    # Fast-filter negative coordinates first to avoid unnecessary dict lookups.
+    if grid is None:
+        return [p for p in neighbors if p[0] >= 0 and p[1] >= 0]
+
+    return [p for p in neighbors if p[0] >= 0 and p[1] >= 0 and p in grid]
+
 
 def print_grid(grid: Grid):
     """
